@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fi" xmlns="http://www.w3.org/1999/xhtml" xml:lang="fi">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Pääteohjaus 2 - TIES4080 - mallipohja</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='tyylit.css') }}"/>
+    </head>
+    <body>
+        <h1>Pelilauta</h1>
+		<p>Kerro luotavan pelialueen koko ja pelaajien nimet. Ruudukko on yhtä monta ruutua leveä kuin korkea.</p>
+		<form action="{{request.base_url}}" method="POST">
+			<fieldset id="formi">
+			<p>{{form.pelilauta.label}}{{ form.pelilauta }}</p><span>
+				{% for error in form.pelilauta.errors %} <p>{{ error|e }}</p> {% endfor %}
+			</span>
+			<p>{{form.pelaaja1.label}}{{ form.pelaaja1 }}</p><span>
+				{% for error in form.pelaaja1.errors %} <p>{{ error|e }}</p> {% endfor %}
+			</span>
+			<p>{{form.pelaaja2.label}}{{ form.pelaaja2 }}</p><span>
+				{% for error in form.pelaaja2.errors %} <p>{{ error|e }}</p> {% endfor %}
+			</span>
+		</fieldset>
+		<p><input type="submit" name="painike" value="Luo pelilauta" id="nappi"/></p>
+		
+		<br/>
+		<br/>
+		{% if linkki == False %}
+		<p>Undo</p>
+		{% else %}
+		<p><a href="/">Undo</a></p>
+		{% endif %}
+		<div class="vasenots">
+			<h2>{{ peluri1 }}</h2></div>
+			<div class="taulu">
+			<table>
+				{% set pallotjaljella = namespace(value=pallot) %}
+				{% for i in lista%}
+				<tr>
+				{% set pallo = loop.index-1 %}
+					{% for k in i %}
+					{% set indeksi = loop.index-1 %}
+					{% if pallo == pallot[indeksi] %}
+						<td class="{{k}}"><button name="pallonappi" class="button1" value="{{loop.index}}"><img src="https://appro.mit.jyu.fi/ties4080/vt/vt2/blue.svg" alt="kuva"/></button></td>
+					{% else %}
+						<td class="{{k}}"></td>
+					{% endif %}
+					{% endfor %}
+				</tr>
+				{% endfor %}
+			</table></div>
+			<input type="hidden" value="{{pallot}}" name="napinpoisto" /></form>
+			<div class="oikeaots">
+			<h2>{{ peluri2 }}</h2></div>
+      
+<!-- HTMLinspectoria käytetään validointiin. Kannattaa
+vielä varmuuden vuoksi ajaa välillä myös W3C:n validaattori -->
+<!-- Sivun validoinnin W3C:n validaattorilla voit tehdä milloin tahansa näppäinyhdistelmällä CTRL+ALT+V -->
+<script src="https://appro.mit.jyu.fi/tools/htmlinspector/html-inspector.js"></script>
+<script src="https://appro.mit.jyu.fi/tools/validator/validator.js"></script>
+<script>
+//<![CDATA[
+function HTMLvalidointi() {
+      try {
+         const parser = new DOMParser();
+         const dom = parser.parseFromString(document.documentElement.outerHTML, "application/xhtml+xml");
+      } 
+      catch (e) {
+            console.warn(e);
+      }
+		HTMLInspector.inspect( {
+        		domRoot: "html",
+        		useRules: null,
+       			 excludeRules: ["script-placement","unnecessary-elements"],
+        		excludeElements: "svg",
+        		excludeSubTrees: ["svg","iframe"],
+        		onComplete: function(errors) {
+                		errors.forEach(function(error) {
+                        	console.warn(error.message, error.context);
+                		});
+
+		        }
+        	} );
+
+        }
+
+window.addEventListener("load", HTMLvalidointi); // ajaa html-inspectorin
+//]]>
+</script>
+</body>
+</html>
+
+

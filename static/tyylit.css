@@ -1,0 +1,51 @@
+#formi {
+    width: 30%;
+}
+input {
+    float: right;
+}
+#koko {
+    width: 4em;
+}
+#nappi {
+    float: left;
+}
+.button1 {
+    border-radius: 50%;
+    border-style: none;
+    background-color: blue;
+}
+.td2 {
+    background-color: black;
+    width: 3.5vw;
+    height: 7vh;
+}
+.td1 {
+    background-color: white;
+    width: 3.5vw;
+    height: 7vh;
+}
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    float: left;
+}
+#nappi {
+    float: left;
+}
+span {
+    color: red;
+}
+.vasenots {
+    float: left;
+    margin-top: 10%;
+    transform: rotate(-90deg);
+    position:relative;
+    font-weight: 900;
+}
+.oikeaots {
+    float: left;
+    margin-top: 10%;
+    transform: rotate(-90deg);
+    font-weight: 900;
+}
